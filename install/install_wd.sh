@@ -119,7 +119,7 @@ git clone -q https://gitlab.com/bharadwaj-raju/WeatherDesk.git
 check_exit_status
 git clone -q https://github.com/henroFall/weatherDesktopInstaller.git
 check_exit_status
-sudo mkdir /opt/WeatherDesk
+sudo mkdir -p /opt/WeatherDesk
 check_exit_status
 sudo cp /tmp/WeatherDesk/*.py /opt/WeatherDesk/
 sudo cp /tmp/weatherDesktopInstaller/install/communityIcon_gupxos5vfkg01.jpg /opt/WeatherDesk/communityIcon_gupxos5vfkg01.jpg
@@ -128,10 +128,10 @@ sudo cp /tmp/weatherDesktopInstaller/install/communityIcon_gupxos5vfkg01.jpg /op
 #echo Writing $username to service file...
 #sed -i "s/username/$username/g" /tmp/weatherDesktopInstaller/install/weatherdesk-service.service
 check_exit_status
-if ! [ -d "~/.config" ]; then mkdir ~/.config 
+if ! [ -d "~/.config" ]; then mkdir -p ~/.config 
 fi
 check_exit_status
-if ! [ -d "~/.config/autostart" ]; then mkdir ~/.config/autostart 
+if ! [ -d "~/.config/autostart" ]; then mkdir -p ~/.config/autostart 
 fi
 check_exit_status
 cp /tmp/weatherDesktopInstaller/install/weatherdesk.desktop ~/.config/autostart
@@ -140,7 +140,7 @@ sudo chmod +x /opt/WeatherDesk/WeatherDesk.py
 check_exit_status
 sudo ln -s /opt/WeatherDesk/WeatherDesk.py /usr/local/bin/WeatherDesk
 check_exit_status
-mkdir ~/.weatherdesk_walls
+mkdir -p ~/.weatherdesk_walls
 check_exit_status
 echo "Downloading wallpaper images..."
 wget -q https://github.com/bharadwaj-raju/FireWatch-WeatherDesk-Pack/archive/master.tar.gz -O /tmp/firewatchpack.tar.gz
