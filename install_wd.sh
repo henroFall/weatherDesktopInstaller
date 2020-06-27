@@ -115,6 +115,9 @@ cd /tmp/
 echo "Cloning bharadwaj-raju's GitLab repo, all credit to bharadwaj-raju!"
 git clone -q https://gitlab.com/bharadwaj-raju/WeatherDesk.git
 check_exit_status
+cd WeatherDesk
+git clone -q https://github.com/henroFall/weatherDesktopInstaller.git
+check_exit_status
 sudo mkdir /opt/WeatherDesk
 check_exit_status
 sudo cp /tmp/WeatherDesk/*.py /opt/WeatherDesk/
