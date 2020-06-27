@@ -99,7 +99,7 @@ echo "It installs with the FireWatch background image pack, but you can customiz
 
 echo
 read -p "Should I install and configure WeatherDesktop to run as a service at boot now y/n? [y]:" desktopYN
-if [[ $desktopYN  == "" ]]; then desktopYN='y'
+if [ -z "$desktopYN" ]; then desktopYN='y'
 fi
 if [[ $desktopYN  == "Yes" ]]; then desktopYN='y'
 fi
@@ -125,11 +125,13 @@ if [[ $desktopYN  == "y" ]]; then
  check_exit_status
  cp /tmp/WeatherDesk/*.py /opt/WeatherDesk/
  cp /tmp/weatherDesktopInstaller/install/communityIcon_gupxos5vfkg01.jpg /opt/WeatherDesk/communityIcon_gupxos5vfkg01.jpg
- if ! [ -d "/home/$username/.config" ]; then mkdir -p /home/$username/.config 
+ if ! [ -d -a "/home/$username/.config" ]; then mkdir -p /home/$username/.config 
  fi
  check_exit_status
- if ! [ -d "/home/$username/.config/autostart" ]; then mkdir -p /home/$username/.config/autostart 
+ cd /home/$username/.config
+ if ! [ -d -a "./autostart" ]; then mkdir -p /home/$username/.config/autostart 
  fi
+ cd /tmp/
  check_exit_status
  cp /tmp/weatherDesktopInstaller/install/weatherdesk.desktop /home/$username/.config/autostart
  check_exit_status
