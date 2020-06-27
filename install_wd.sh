@@ -1,5 +1,5 @@
 #!/bin/bash
-
+################################### STATIC BASE FUNCTIONS
 rootCheck() {
     if [ $(id -u) = 0 ]
     then
@@ -28,6 +28,7 @@ maximize() {
     wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz
 }
 
+################################### DYNAMIC BASE FUNCTIONS
 welcome() {
 echo -e "                                           %%"
 echo -e "                                       (@@@@@@@@"
@@ -81,7 +82,9 @@ cleanup () {
 sudo rm -R /tmp/WeatherDesk
 }
 
-####################################################
+################################### APP FUNCTIONS
+
+################################### APP
 echo 
 rootCheck
 prereq
