@@ -28,13 +28,22 @@ echo
 
 rootCheck
 
-sudo apt install wget #in case it's not already installed
-wget https://github.com/bharadwaj-raju/WeatherDesk/archive/master.tar.gz -O /tmp/weatherdesk.tar.gz
-tar -xvf /tmp/weatherdesk.tar.gz -C /tmp/
-sudo mkdir /opt/weatherdesk
-sudo cp /tmp/WeatherDesk-master/*.py /opt/weatherdesk/
-sudo chmod +x /opt/weatherdesk/WeatherDesk.py
-sudo ln -s /opt/weatherdesk/WeatherDesk.py /usr/local/bin/weatherdesk
-mkdir ~/.weatherdesk_walls
+apt install git
+check_exit_status
+cd /tmp/
+git clone https://gitlab.com/bharadwaj-raju/WeatherDesk.git
+check_exit_status
+mkdir /opt/WeatherDesk
+check_exit_status
+cp /tmp/WeatherDesk/*.py /opt/WeatherDesk/
+check_exit_status
+chmod +x /opt/WeatherDesk/WeatherDesk.py
+check_exit_status
+ln -s /opt/WeatherDesk/WeatherDesk.py /usr/local/bin/WeatherDesk
+check_exit_status
+mkdir ~/.WeatherDesk_walls
+check_exit_status
 wget https://github.com/bharadwaj-raju/FireWatch-WeatherDesk-Pack/archive/master.tar.gz -O /tmp/firewatchpack.tar.gz
-tar -xvf /tmp/firewatchpack.tar.gz -C ~/.weatherdesk_walls/ --strip-components=1
+check_exit_status
+tar -xvf /tmp/firewatchpack.tar.gz -C ~/.WeatherDesk_walls/ --strip-components=1
+check_exit_status
