@@ -1,5 +1,4 @@
 #!/bin/bash
-
 ################################### STATIC BASE FUNCTIONS
 rootCheck() {
     if ! [ $(id -u) = 0 ]
