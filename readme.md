@@ -7,7 +7,7 @@ w/ FireWatch wallpapers installed to run as a service on your desktop, then
 please continue. 
 
 To run this installer on its own:
-`wget -N https://raw.githubusercontent.com/henroFall/weatherDesktopInstaller/master/install_wd.sh && sudo chmod +x install_wd.sh && ./install_wd.sh && rm install_wd.sh`
+`wget -N https://raw.githubusercontent.com/henroFall/weatherDesktopInstaller/master/install/install_wd.sh && sudo chmod +x install_wd.sh && ./install_wd.sh && rm install_wd.sh`
 
 If you'd like to check out an app that scans barcodes on the way to the trash can
 for an automatic grocery-list, then Oscar2 is for you. You'll get this module
