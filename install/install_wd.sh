@@ -30,6 +30,7 @@ maximize() {
 
 ################################### DYNAMIC BASE FUNCTIONS
 welcome() {
+echo
 echo -e "                                           %%"
 echo -e "                                       (@@@@@@@@"
 echo -e "                                   #@@@@@@@@@@@@@@@@("
@@ -80,6 +81,7 @@ sudo apt -y -qq install wmctrl
 
 cleanup () {
 sudo rm -R /tmp/WeatherDesk
+sudo rm -R /tmp/weatherDesktopInstaller
 }
 
 ################################### APP FUNCTIONS
@@ -115,14 +117,13 @@ cd /tmp/
 echo "Cloning bharadwaj-raju's GitLab repo, all credit to bharadwaj-raju!"
 git clone -q https://gitlab.com/bharadwaj-raju/WeatherDesk.git
 check_exit_status
-cd WeatherDesk
 git clone -q https://github.com/henroFall/weatherDesktopInstaller.git
 check_exit_status
 sudo mkdir /opt/WeatherDesk
 check_exit_status
 sudo cp /tmp/WeatherDesk/*.py /opt/WeatherDesk/
 check_exit_status
-sudo cp /tmp/WeatherDesk/install/weatherdesk-service.service /etc/systemd/system
+sudo cp /tmp/weatherDesktopInstaller/install/weatherdesk-service.service /etc/systemd/system
 check_exit_status
 sudo chmod +x /opt/WeatherDesk/WeatherDesk.py
 check_exit_status
