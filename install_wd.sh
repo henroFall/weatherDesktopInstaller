@@ -27,7 +27,6 @@ echo
 ####################################################
 
 rootCheck
-
 sudo apt install wget #in case it's not already installed
 wget https://github.com/bharadwaj-raju/WeatherDesk/archive/master.tar.gz -O /tmp/weatherdesk.tar.gz
 tar -xvf /tmp/weatherdesk.tar.gz -C /tmp/
