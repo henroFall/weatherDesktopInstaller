@@ -2,9 +2,9 @@
 
 ################################### STATIC BASE FUNCTIONS
 rootCheck() {
-    if [ $(id -u) = 0 ]
+    if ! [ $(id -u) = 0 ]
     then
-        echo -e "\e[41m I am root! Run WITHOUT SUDO. \e[0m"
+        echo -e "\e[41m I am NOT root! Run WITH SUDO. \e[0m"
         exit 1
     fi
 }
@@ -76,25 +76,28 @@ echo -e "                |_|   |___||_|_\\|___|  \\_/\\_/  /_/ \\_\\   |_|    \\
 }
 
 prereq () {
-sudo apt -y -qq install wmctrl
+apt -y -qq install wmctrl
 }
 
 cleanup () {
-sudo rm -R /tmp/WeatherDesk
-sudo rm -R /tmp/weatherDesktopInstaller
+rm -R /tmp/WeatherDesk
+rm -R /tmp/weatherDesktopInstaller
 }
 
 ################################### APP FUNCTIONS
 
 ################################### APP
 echo 
-rootCheck
+#rootCheck
 prereq
 maximize
 welcome
+username=${SUDO_USER:-${USER}}
 echo
 echo "Now we can optionally install the WeatherDesktop w/ FireWatch Python script from bharadwaj-raju."
-echo "This script will show a different background images, based on your location, time of day, and current weather."
+echo "This script will change the desktop background image based on your location, time of day, and current weather."
+echo "It installs with the FireWatch background image pack, but you can customize the images by simply replacing them."
+
 echo
 read -p "Should I install and configure WeatherDesktop to run as a service at boot now y/n? [y]:" desktopYN
 if [[ $desktopYN  == "" ]]; then desktopYN='y'
@@ -111,53 +114,42 @@ if [[ $desktopYN  == "Yes" ]]; then desktopYN='y'
 fi
 
 if [[ $desktopYN  == "y" ]]; then
-sudo apt -y -qq install git
-check_exit_status
-cd /tmp/
-echo "Cloning bharadwaj-raju's GitLab repo, all credit to bharadwaj-raju!"
-git clone -q https://gitlab.com/bharadwaj-raju/WeatherDesk.git
-check_exit_status
-git clone -q https://github.com/henroFall/weatherDesktopInstaller.git
-check_exit_status
-sudo mkdir -p /opt/WeatherDesk
-check_exit_status
-sudo cp /tmp/WeatherDesk/*.py /opt/WeatherDesk/
-sudo cp /tmp/weatherDesktopInstaller/install/communityIcon_gupxos5vfkg01.jpg /opt/WeatherDesk/communityIcon_gupxos5vfkg01.jpg
-#check_exit_status
-#username = $(whoami)
-#echo Writing $username to service file...
-#sed -i "s/username/$username/g" /tmp/weatherDesktopInstaller/install/weatherdesk-service.service
-check_exit_status
-if ! [ -d "~/.config" ]; then mkdir -p ~/.config 
-fi
-check_exit_status
-if ! [ -d "~/.config/autostart" ]; then mkdir -p ~/.config/autostart 
-fi
-check_exit_status
-cp /tmp/weatherDesktopInstaller/install/weatherdesk.desktop ~/.config/autostart
-check_exit_status
-sudo chmod +x /opt/WeatherDesk/WeatherDesk.py
-check_exit_status
-sudo ln -s /opt/WeatherDesk/WeatherDesk.py /usr/local/bin/WeatherDesk
-check_exit_status
-mkdir -p ~/.weatherdesk_walls
-check_exit_status
-echo "Downloading wallpaper images..."
-wget -q https://github.com/bharadwaj-raju/FireWatch-WeatherDesk-Pack/archive/master.tar.gz -O /tmp/firewatchpack.tar.gz
-check_exit_status
-tar -xvf /tmp/firewatchpack.tar.gz -C ~/.weatherdesk_walls/ --strip-components=1
-check_exit_status
-#sudo systemctl daemon-reload
-#check_exit_status
-#sudo systemctl enable weatherdesk-service.service
-#check_exit_status
-#sudo systemctl start weatherdesk-service.service
-#check_exit_status
-cleanup
-check_exit_status
-  else 
-      echo "WeatherDesktop w/ FireWatch WILL NOT be configured." 
-fi
-echo
-echo "Installation of WeatherDesktop / Firewatch module is complete."
-echo
+ apt -y -qq install git
+ check_exit_status
+ cd /tmp/
+ echo "Cloning bharadwaj-raju's GitLab repo, all credit to bharadwaj-raju!"
+ git clone -q https://gitlab.com/bharadwaj-raju/WeatherDesk.git
+ check_exit_status
+ git clone -q https://github.com/henroFall/weatherDesktopInstaller.git
+ check_exit_status
+ mkdir -p /opt/WeatherDesk
+ check_exit_status
+ cp /tmp/WeatherDesk/*.py /opt/WeatherDesk/
+ cp /tmp/weatherDesktopInstaller/install/communityIcon_gupxos5vfkg01.jpg /opt/WeatherDesk/communityIcon_gupxos5vfkg01.jpg
+ if ! [ -d "/home/$username/.config" ]; then mkdir -p /home/$username/.config 
+ fi
+ check_exit_status
+ if ! [ -d "/home/$username/.config/autostart" ]; then mkdir -p /home/$username/.config/autostart 
+ fi
+ check_exit_status
+ cp /tmp/weatherDesktopInstaller/install/weatherdesk.desktop /home/$username/.config/autostart
+ check_exit_status
+ chmod +x /opt/WeatherDesk/WeatherDesk.py
+ check_exit_status
+ ln -s /opt/WeatherDesk/WeatherDesk.py /usr/local/bin/WeatherDesk
+ check_exit_status
+ mkdir -p /home/$username/.weatherdesk_walls
+ check_exit_status
+ echo "Downloading wallpaper images..."
+ wget -q https://github.com/bharadwaj-raju/FireWatch-WeatherDesk-Pack/archive/master.tar.gz -O /tmp/firewatchpack.tar.gz
+ check_exit_status
+ tar -xvf /tmp/firewatchpack.tar.gz -C /home/$username/.weatherdesk_walls/ --strip-components=1
+ check_exit_status
+ cleanup
+ check_exit_status
+ echo
+ echo "Installation of WeatherDesktop / Firewatch module is complete."
+ echo "Your wallpaper will update on the next reboot and will then update live!"
+   else 
+       echo "WeatherDesktop w/ FireWatch WILL NOT be configured." 
+ fi
