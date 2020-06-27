@@ -27,7 +27,6 @@ echo
 ####################################################
 
 rootCheck
-
 apt install git
 check_exit_status
 cd /tmp/
