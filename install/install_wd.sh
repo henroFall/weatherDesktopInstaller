@@ -129,7 +129,7 @@ sudo chmod +x /opt/WeatherDesk/WeatherDesk.py
 check_exit_status
 sudo ln -s /opt/WeatherDesk/WeatherDesk.py /usr/local/bin/WeatherDesk
 check_exit_status
-mkdir ~/.WeatherDesk_walls
+mkdir ~/.weatherdesk_walls
 check_exit_status
 echo "Downloading wallpaper images..."
 wget -q https://github.com/bharadwaj-raju/FireWatch-WeatherDesk-Pack/archive/master.tar.gz -O /tmp/firewatchpack.tar.gz
