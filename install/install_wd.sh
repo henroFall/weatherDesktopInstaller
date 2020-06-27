@@ -12,7 +12,7 @@ rootCheck() {
 check_exit_status() {
     if [ $? -ne 0 ]
     then
-        echo -e "\e[41m ERROR: PROCESS FAILED!"
+        echo -e "\e[41m ERROR: PROCESS FAILED!\e[0m"
         echo
         read -p "The last command exited with an error. Exit script? (yes/no)" answer
         if [ "$answer" == "yes" ]
@@ -22,7 +22,6 @@ check_exit_status() {
             exit 1
         fi
     fi
-echo -e " \e[0m"
 }
 
 maximize() {
@@ -124,6 +123,10 @@ sudo mkdir /opt/WeatherDesk
 check_exit_status
 sudo cp /tmp/WeatherDesk/*.py /opt/WeatherDesk/
 check_exit_status
+username = $(whoami)
+echo Writing $username to service file...
+sed -i "s/username/$username/g" /tmp/weatherDesktopInstaller/install/weatherdesk-service.service
+check_exit_status
 sudo cp /tmp/weatherDesktopInstaller/install/weatherdesk-service.service /etc/systemd/system
 check_exit_status
 sudo chmod +x /opt/WeatherDesk/WeatherDesk.py
@@ -136,6 +139,12 @@ echo "Downloading wallpaper images..."
 wget -q https://github.com/bharadwaj-raju/FireWatch-WeatherDesk-Pack/archive/master.tar.gz -O /tmp/firewatchpack.tar.gz
 check_exit_status
 tar -xvf /tmp/firewatchpack.tar.gz -C ~/.weatherdesk_walls/ --strip-components=1
+check_exit_status
+sudo systemctl daemon-reload
+check_exit_status
+sudo systemctl enable weatherdesk-service.service
+check_exit_status
+sudo systemctl start weatherdesk-service.service
 check_exit_status
 cleanup
 check_exit_status
