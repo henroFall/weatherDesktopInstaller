@@ -21,20 +21,102 @@ check_exit_status() {
             exit 1
         fi
     fi
-echo
+echo -e " \e[0m"
+}
+
+maximize() {
+    wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz
+}
+
+welcome() {
+echo -e "                                           %%"
+echo -e "                                       (@@@@@@@@"
+echo -e "                                   #@@@@@@@@@@@@@@@@("
+echo -e "                              #@@@@@@@@@@@@ &@@@@@@@@@@@@/"
+echo -e "                        %@@@@@@@@@@@@@@         %@@@@@@@@@@@@@@("
+echo -e "              @@@@@@@@@@@@@@@@@@@@         @&        @@@@@@@@@@@@@@@@@@@@#"
+echo -e "              /@@@@@@@@@@@@@&            (@@@@            /@@@@@@@@@@@@@@"
+echo -e "               @@@@@@%                  @@@@@@@%                 ,@@@@@@&"
+echo -e "               /@@@@@@                /@@@@@@@@@@                 @@@@@@/"
+echo -e "                &@@@@@@              @@@@@@@@@@@@@@              (&@@@@&"
+echo -e "                 @@@@@@@           #@@@@@@@@@@@@@@@@%           @@@@@@@"
+echo -e "                  @@@@@@&         @@@&@@@@@@@@@@@@&@@@         %@@@@@&"
+echo -e "                  /@@@@@@&          (@@@@@@@@@@@@@@           #@@@@@@"
+echo -e "                   (@@@@@@&        @@@@@@@@@@@@@@@@@%        &@@@@@&/"
+echo -e "                    /@@@@@@&      @@@@@@@@@@@@@@@@@@@@,     @@@@@@@"
+echo -e "                      @@@@@@@   #%%#/   #@@@@@@( (%%%%%(   @@@@@@@"
+echo -e "                       &@@@@@@&         /@@@@@@#         &@@@@@@/"
+echo -e "                        /@@@@@@@%        @@@@@@(       /@@@@@@@"
+echo -e "                          @@@@@@@@/      %%%#((      /@@@@@@@/"
+echo -e "                            @@@@@@@@/              &@@@@@@@"
+echo -e "                              @@@@@@@@@         ,@@@@@@@@%"
+echo -e "                                &@@@@@@@@@   (@@@@@@@@@"
+echo -e "                                   @@@@@@@@@@@@@@@@@%"
+echo -e "                                      @@@@@@@@@@@"
+echo -e "                                          @@@/"
+echo -e "                                             ("                          
+echo -e " (  (                    )    )              )\\ )               )     )"        
+echo -e " )\\))(   '   (     )  ( /( ( /(    (   (    (()/(     (      ( /(  ( /(              (  ("
+echo -e "((_)()\\ )   ))\\ ( /(  )\\()))\\())  ))\\  )(    /(_))   ))\\ (   )\\()) )\\()) (   \`  )    )\\))("
+echo -e "_(())\\_)() /((_))(_))(_))/((_)\\  /((_)(()\\  (_))_   /((_))\\ ((_)\\ (_))/  )\\  /(/(   ((_)()\\   / /"
+echo -e "\\ \\((_)/ /(_)) ((_)_ | |_ | |(_)(_))   ((_)  |   \\ (_)) ((_)| |(_)| |_  ((_)((_)_\\  _(()((_) / /"
+echo -e " \\ \\/\\/ / / -_)/ _\` ||  _|| ' \\ / -_) | '_|  | |) |/ -_)(_-<| / / |  _|/ _ \\| '_ \\) \\ V  V //_/"
+echo -e "  \\_/\\_/  \\___|\\__,_| \\__||_||_|\\___| |_|    |___/ \\___|/__/|_\\_\\  \\__|\\___/| .__/   \\_/\\_/"
+echo -e "                 (     (    (                                            )  |_|"
+echo -e "                 )\\ )  )\\ ) )\\ )      (  (       (       *   )   (    ( /( "
+echo -e "                (()/( (()/((()/( (    )\\))(   '  )\\    \` )  /(   )\\   )\\())"
+echo -e "                 /(_)) /(_))/(_)))\\  ((_)()\\ )((((_)(   ( )(_))(((_) ((_)\\ "
+echo -e "                (_))_|(_)) (_)) ((_) _(())\\_)())\\ _ )\\ (_(_()) )\\___  _((_)"
+echo -e "                | |_  |_ _|| _ \\| __|\\ \\((_)/ /(_)_\\(_)|_   _|((/ __|| || |"
+echo -e "                | __|  | | |   /| _|  \\ \\/\\/ /  / _ \\    | |   | (__ | __ |"
+echo -e "                |_|   |___||_|_\\|___|  \\_/\\_/  /_/ \\_\\   |_|    \\___||_||_|"
+
+}
+
+prereq () {
+sudo apt -y -qq install wmctrl
+}
+
+cleanup () {
+sudo rm -R /tmp/WeatherDesk
 }
 
 ####################################################
-
+echo 
 rootCheck
-sudo apt install git
+prereq
+maximize
+welcome
+echo
+echo "Now we can optionally install the WeatherDesktop w/ FireWatch Python script from bharadwaj-raju."
+echo "This script will show a different background images, based on your location, time of day, and current weather."
+echo
+read -p "Should I install and configure WeatherDesktop to run as a service at boot now y/n? [y]:" desktopYN
+if [[ $desktopYN  == "" ]]; then desktopYN='y'
+fi
+if [[ $desktopYN  == "Yes" ]]; then desktopYN='y'
+fi
+if [[ $desktopYN  == "YES" ]]; then desktopYN='y'
+fi
+if [[ $desktopYN  == "yES" ]]; then desktopYN='y'
+fi
+if [[ $desktopYN  == "Y" ]]; then desktopYN='y'
+fi
+if [[ $desktopYN  == "Yes" ]]; then desktopYN='y'
+fi
+
+if [[ $desktopYN  == "y" ]]; then
+sudo apt -y -qq install git
 check_exit_status
 cd /tmp/
-git clone https://gitlab.com/bharadwaj-raju/WeatherDesk.git
+echo "Cloning bharadwaj-raju's GitLab repo, all credit to bharadwaj-raju!"
+git clone -q https://gitlab.com/bharadwaj-raju/WeatherDesk.git
 check_exit_status
-mkdir /opt/WeatherDesk
+sudo mkdir /opt/WeatherDesk
 check_exit_status
 sudo cp /tmp/WeatherDesk/*.py /opt/WeatherDesk/
+check_exit_status
+sudo cp /tmp/WeatherDesk/install/weatherdesk-service.service /etc/systemd/system
 check_exit_status
 sudo chmod +x /opt/WeatherDesk/WeatherDesk.py
 check_exit_status
@@ -42,7 +124,13 @@ sudo ln -s /opt/WeatherDesk/WeatherDesk.py /usr/local/bin/WeatherDesk
 check_exit_status
 mkdir ~/.WeatherDesk_walls
 check_exit_status
-wget https://github.com/bharadwaj-raju/FireWatch-WeatherDesk-Pack/archive/master.tar.gz -O /tmp/firewatchpack.tar.gz
+echo "Downloading wallpaper images..."
+wget -q https://github.com/bharadwaj-raju/FireWatch-WeatherDesk-Pack/archive/master.tar.gz -O /tmp/firewatchpack.tar.gz
 check_exit_status
-tar -xvf /tmp/firewatchpack.tar.gz -C ~/.WeatherDesk_walls/ --strip-components=1
+tar -xvf /tmp/firewatchpack.tar.gz -C ~/.weatherdesk_walls/ --strip-components=1
 check_exit_status
+cleanup
+check_exit_status
+  else 
+      echo "WeatherDesktop w/ FireWatch WILL NOT be configured." 
+fi
