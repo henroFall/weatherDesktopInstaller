@@ -9,7 +9,7 @@ Go on over there to find out what this is all about. It's awesome.
 
 To run this installer:
 
-`wget -N https://raw.githubusercontent.com/henroFall/weatherDesktopInstaller/master/install_wd.sh && sudo chmod +x install_wd.sh && sudo ./install_wd.sh && rm install_wd.sh`
+`wget -N https://raw.githubusercontent.com/henroFall/weatherDesktopInstaller/master/install_wd.sh && sudo chmod +x install_wd.sh && ./install_wd.sh && rm install_wd.sh`
 
 @bharadwaj-raju's code is under the GNU GPLv3 License, so this is as well.
 
