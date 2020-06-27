@@ -127,9 +127,11 @@ sudo cp /tmp/weatherDesktopInstaller/install/communityIcon_gupxos5vfkg01.jpg /op
 #echo Writing $username to service file...
 #sed -i "s/username/$username/g" /tmp/weatherDesktopInstaller/install/weatherdesk-service.service
 check_exit_status
-if ! [ -d "~/.config" ]; then mkdir ~/.config fi
+if ! [ -d "~/.config" ]; then mkdir ~/.config 
+fi
 check_exit_status
-if ! [ -d "~/.config/autostart" ]; then mkdir ~/.config/autostart fi
+if ! [ -d "~/.config/autostart" ]; then mkdir ~/.config/autostart 
+fi
 check_exit_status
 cp /tmp/weatherDesktopInstaller/install/weatherdesk.desktop ~/.config/autostart
 check_exit_status
