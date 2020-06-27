@@ -1,5 +1,4 @@
 #!/bin/bash
-
 ################################### STATIC BASE FUNCTIONS
 rootCheck() {
     if ! [ $(id -u) = 0 ]
@@ -134,7 +133,7 @@ if [[ $desktopYN  == "y" ]]; then
  fi
  cd /tmp/
  check_exit_status
- cp /tmp/weatherDesktopInstaller/install/weatherdesk.desktop /home/$username/.config/autostart
+ cp /tmp/weatherDesktopInstaller/install/weatherdesk.desktop /home/$username/.config/autostart/
  check_exit_status
  chmod +x /opt/WeatherDesk/WeatherDesk.py
  check_exit_status
