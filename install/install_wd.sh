@@ -122,12 +122,17 @@ check_exit_status
 sudo mkdir /opt/WeatherDesk
 check_exit_status
 sudo cp /tmp/WeatherDesk/*.py /opt/WeatherDesk/
+sudo cp /tmp/weatherDesktopInstaller/install/communityIcon_gupxos5vfkg01.jpg /opt/WeatherDesk/communityIcon_gupxos5vfkg01.jpg
+#check_exit_status
+#username = $(whoami)
+#echo Writing $username to service file...
+#sed -i "s/username/$username/g" /tmp/weatherDesktopInstaller/install/weatherdesk-service.service
 check_exit_status
-username = $(whoami)
-echo Writing $username to service file...
-sed -i "s/username/$username/g" /tmp/weatherDesktopInstaller/install/weatherdesk-service.service
+if ! [ -d "~/.config" ]; then mkdir ~/.config fi
 check_exit_status
-sudo cp /tmp/weatherDesktopInstaller/install/weatherdesk-service.service /etc/systemd/system
+if ! [ -d "~/.config/autostart" ]; then mkdir ~/.config/autostart fi
+check_exit_status
+cp /tmp/weatherDesktopInstaller/install/weatherdesk.desktop ~/.config/autostart
 check_exit_status
 sudo chmod +x /opt/WeatherDesk/WeatherDesk.py
 check_exit_status
@@ -140,14 +145,17 @@ wget -q https://github.com/bharadwaj-raju/FireWatch-WeatherDesk-Pack/archive/mas
 check_exit_status
 tar -xvf /tmp/firewatchpack.tar.gz -C ~/.weatherdesk_walls/ --strip-components=1
 check_exit_status
-sudo systemctl daemon-reload
-check_exit_status
-sudo systemctl enable weatherdesk-service.service
-check_exit_status
-sudo systemctl start weatherdesk-service.service
-check_exit_status
+#sudo systemctl daemon-reload
+#check_exit_status
+#sudo systemctl enable weatherdesk-service.service
+#check_exit_status
+#sudo systemctl start weatherdesk-service.service
+#check_exit_status
 cleanup
 check_exit_status
   else 
       echo "WeatherDesktop w/ FireWatch WILL NOT be configured." 
 fi
+echo
+echo "Installation of WeatherDesktop / Firewatch module is complete."
+echo

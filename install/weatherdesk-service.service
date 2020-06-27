@@ -1,9 +1,10 @@
 [Unit]
 Description=WeatherDesktop
-After=syslog.target network.target multi-user.target nodm.service
+After=syslog.target network.target multi-user.target
 Requires=nodm.service
 
 [Service]
+Environment=DISPLAY=:0
 Type=forking
 User=username
 ExecStart=/usr/local/bin/WeatherDesk
