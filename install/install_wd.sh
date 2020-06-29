@@ -128,12 +128,11 @@ if [[ $desktopYN  == "y" ]]; then
  if ! [ -d -a "/home/$username/.config" ]; then mkdir -p /home/$username/.config 
  fi
  check_exit_status
- cd /home/$username/.config
- if ! [ -d -a "./autostart" ]; then mkdir -p /home/$username/.config/autostart 
- fi
+ mkdir -p /home/$username/.config/autostart 
+ check_exit_status
  cd /tmp/
  check_exit_status
- cp /tmp/weatherDesktopInstaller/install/weatherdesk.desktop /home/$username/.config/autostart/
+ cp /tmp/weatherDesktopInstaller/install/weatherdesk.desktop /home/$username/.config/autostart/weatherdesk.desktop
  check_exit_status
  chmod +x /opt/WeatherDesk/WeatherDesk.py
  check_exit_status
