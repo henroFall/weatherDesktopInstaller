@@ -136,7 +136,7 @@ if [[ $desktopYN  == "y" ]]; then
  check_exit_status
  chmod +x /opt/WeatherDesk/WeatherDesk.py
  check_exit_status
- ln -s /opt/WeatherDesk/WeatherDesk.py /usr/local/bin/WeatherDesk
+ ln -sf /opt/WeatherDesk/WeatherDesk.py /usr/local/bin/WeatherDesk
  check_exit_status
  mkdir -p /home/$username/.weatherdesk_walls
  check_exit_status
